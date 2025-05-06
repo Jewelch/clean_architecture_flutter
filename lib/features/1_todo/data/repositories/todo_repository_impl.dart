@@ -44,24 +44,22 @@ class TodoRepositoryImpl implements TodoRepository {
   }
 
   @override
-  Future<Either<Failure, TodoEntity?>> deleteTodo(int id) async {
+  Future<Either<Failure, bool>> deleteTodo(int id) async {
     if (!connectivity.isConnected) {
       // Cannot delete without internet connection
       return Left(ServerFailure());
     }
 
     try {
-      final todoResponse = await remoteDataSource.deleteTodo(id);
-      if (todoResponse == null) return const Right(null);
+      final todoResult = await remoteDataSource.deleteTodo(id);
+
+      if (todoResult == null || todoResult.success == false) return const Right(false);
 
       // Also remove from local cache
       await localDataSource.removeTodo(id);
 
-      // Convert model to entity
-      final todoEntity = TodoEntity.fromModel(todoResponse);
-
-      // Return as entity
-      return Right(todoEntity);
+      // Signals success
+      return Right(true);
     } on ServerException {
       return Left(ServerFailure());
     }

@@ -20,6 +20,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
     try {
       final foundTodos = await getTodosUC.execute();
+
       foundTodos.fold(
         (failure) => emit(const TodoErrorState(errorMessage: 'Error loading todos')),
         (todos) => emit(TodoLoadedState(todos: todos)),
@@ -30,26 +31,19 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   }
 
   Future<void> _onDeleteTodo(DeleteTodoEvent event, Emitter<TodoState> emit) async {
-    // Get current state to work with current todos list
-    if (state is TodoLoadedState) {
-      final currentTodos = (state as TodoLoadedState).todos;
+    // Todos must be loaded first
+    if (state is! TodoLoadedState) return;
 
-      // Optimistically remove the todo from UI immediately
+    final currentTodos = (state as TodoLoadedState).todos;
+
+    // Make API call to delete the todo
+    final deleteResult = await deleteTodoUC.execute(event.id);
+
+    deleteResult.fold((failure) => emit(TodoErrorState(errorMessage: 'Error deleting todo: ${failure.toString()}')), (
+      deletedTodo,
+    ) {
       final updatedTodos = List<TodoEntity>.from(currentTodos)..removeWhere((todo) => todo.id == event.id);
-
       emit(TodoLoadedState(todos: updatedTodos));
-
-      try {
-        // Make API call to delete the todo
-        await deleteTodoUC.execute(event.id);
-      } catch (e) {
-        // If there was an error, restore the original state
-        emit(TodoLoadedState(todos: currentTodos));
-        emit(TodoErrorState(errorMessage: 'Error deleting todo: ${e.toString()}'));
-
-        // Re-emit the loaded state so the UI continues to show todos
-        emit(TodoLoadedState(todos: currentTodos));
-      }
-    }
+    });
   }
 }

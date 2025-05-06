@@ -5,7 +5,7 @@ import '../../models/todo_model.dart';
 
 abstract class TodoRemoteDataSource {
   Future<TodosListModel?> getTodos();
-  Future<TodoModel?> deleteTodo(int id);
+  Future<PatchingModel?> deleteTodo(int id);
 }
 
 class TodoRemoteDataSourceImpl implements TodoRemoteDataSource {
@@ -28,7 +28,7 @@ class TodoRemoteDataSourceImpl implements TodoRemoteDataSource {
   }
 
   @override
-  Future<TodoModel?> deleteTodo(int id) async {
+  Future<PatchingModel?> deleteTodo(int id) async {
     try {
       return (await _apiClient.performDecodingRequest(
         debugIt: true,

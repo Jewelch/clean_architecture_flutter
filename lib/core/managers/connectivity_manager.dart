@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart';
 
 class ConnecetivityManager {
   final Connectivity connectivity;
@@ -28,6 +29,7 @@ class ConnecetivityManager {
   void _updateConnectionStatus(List<ConnectivityResult> results) {
     // If any connectivity type is available (not none), consider connected
     _isConnected = results.any((result) => result != ConnectivityResult.none);
+    debugPrint('Connectivity status: $_isConnected');
   }
 
   // Synchronous getters that use cached connectivity state

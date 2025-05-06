@@ -5,5 +5,5 @@ import '../entities/todo_entity.dart';
 
 abstract class TodoRepository {
   Future<Either<Failure, List<TodoEntity>>> getTodos();
-  Future<Either<Failure, TodoEntity?>> deleteTodo(int id);
+  Future<Either<Failure, bool>> deleteTodo(int id);
 }
