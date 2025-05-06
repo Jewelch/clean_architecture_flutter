@@ -1,11 +1,10 @@
-import 'package:bloc_vs_cubit/main.dart';
-
-import '../../../features/todo/data/datasource/local/todo_local_datasource.dart';
-import '../../../features/todo/data/datasource/remote/todo_remote_datasource.dart';
-import '../../../features/todo/data/repositories/todo_repository_impl.dart';
-import '../../../features/todo/domain/repositories/todo_repository.dart';
-import '../../../features/todo/domain/usecases/get_todos_uc.dart';
-import '../../../features/todo/presentation/bloc/todo_bloc.dart';
+import '../../../main.dart';
+import '../data/datasource/local/todo_local_datasource.dart';
+import '../data/datasource/remote/todo_remote_datasource.dart';
+import '../data/repositories/todo_repository_impl.dart';
+import '../domain/repositories/todo_repository.dart';
+import '../domain/usecases/get_todos_uc.dart';
+import '../presentation/bloc/todo_bloc.dart';
 
 void injectTodosBindings() {
   // Bloc

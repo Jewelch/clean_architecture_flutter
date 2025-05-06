@@ -15,14 +15,14 @@ class TodoRepositoryImpl implements TodoRepository {
   Future<List<TodoEntity>> getTodos() async {
     try {
       if (connectivity.isConnected) {
-        // Try to get from remote first
-        final remoteTodos = await remoteDataSource.getTodos();
+        final todosResponse = await remoteDataSource.getTodos();
+
+        if (todosResponse?.todos != null) return [];
+
         // Save to local
+        await localDataSource.saveTodos(todosResponse!.todos!);
         // Return as entities
-        return remoteTodos.fold(
-          (failure) => <TodoEntity>[],
-          (todos) => todos?.todos?.map((model) => TodoEntity.fromModel(model)).toList() ?? <TodoEntity>[],
-        );
+        return todosResponse.todos!.map((model) => TodoEntity.fromModel(model)).toList();
       } else {
         // Try to get from local
         final localTodos = await localDataSource.getTodos();

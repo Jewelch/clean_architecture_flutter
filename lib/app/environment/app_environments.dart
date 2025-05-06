@@ -7,5 +7,5 @@ enum AppEnvironments {
 
   const AppEnvironments({this.googleApiKey = ""});
 
-  static const baseUrl = "https://dummyjson.com";
+  static const baseUrl = "https://dummyjson.com/";
 }

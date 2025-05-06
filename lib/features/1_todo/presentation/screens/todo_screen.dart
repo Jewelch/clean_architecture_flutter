@@ -1,8 +1,8 @@
-import 'package:bloc_vs_cubit/common/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../app/app_widget.dart';
+import '../../../../common/widgets/index.dart';
 import '../bloc/todo_bloc.dart';
 import '../bloc/todo_event.dart';
 import '../bloc/todo_state.dart';
@@ -62,12 +62,6 @@ class _TodoScreenState extends State<TodoScreen> {
           ValueListenableBuilder(valueListenable: AppWidgetState.appState, builder: (_, value, __) => Text('${value}')),
           HorizontalSpacing(40),
           FloatingActionButton(onPressed: _showAddTodoDialog, tooltip: 'Add Todo', child: const Icon(Icons.add)),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
         ],
       ),
     );
