@@ -12,11 +12,10 @@ class TodoRemoteDataSourceImpl implements TodoRemoteDataSource {
   TodoRemoteDataSourceImpl({required RequestPerformer requestPerformer}) : _apiClient = requestPerformer;
 
   @override
-  Future<TodosListModel?> getTodos() async {
-    return await _apiClient.performDecodingRequest(
-      method: RestfulMethods.get,
-      path: 'todos',
-      decodableModel: TodosListModel(),
-    );
-  }
+  Future<TodosListModel?> getTodos() async => await _apiClient.performDecodingRequest(
+    debugIt: false,
+    method: RestfulMethods.get,
+    path: 'todos',
+    decodableModel: TodosListModel(),
+  );
 }

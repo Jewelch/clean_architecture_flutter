@@ -36,6 +36,7 @@ class _TodoScreenState extends State<TodoScreen> {
       appBar: AppBar(title: const Text('Todo List - Bloc'), backgroundColor: Colors.green),
       body: BlocBuilder<TodoBloc, TodoState>(
         builder: (context, state) {
+          debugPrint('state: $state');
           return switch (state) {
             TodoInitialState() => const Center(child: Text('Initializing...')),
             TodoLoadingState() => const Center(child: CircularProgressIndicator()),

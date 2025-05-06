@@ -15,8 +15,8 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     emit(const TodoLoadingState());
 
     try {
-      final result = await getTodosUC.execute();
-      result.isEmpty ? emit(const TodoLoadedState(todos: [])) : emit(TodoLoadedState(todos: result));
+      final foundTodos = await getTodosUC.execute();
+      foundTodos.isEmpty ? emit(const TodoLoadedState(todos: [])) : emit(TodoLoadedState(todos: foundTodos));
     } catch (e) {
       emit(const TodoErrorState(errorMessage: 'Error loading todos'));
     }

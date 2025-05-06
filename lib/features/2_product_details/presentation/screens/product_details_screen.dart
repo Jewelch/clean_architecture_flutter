@@ -37,6 +37,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       ),
       body: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
+          debugPrint('state: $state');
+
           return switch (state) {
             ProductInitialState() => const Center(child: Text('Initializing...')),
             ProductLoadingState() => const Center(child: CircularProgressIndicator()),

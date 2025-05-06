@@ -2,7 +2,7 @@ part of 'main.dart';
 
 Future<void> _configureRequester() async => RequestPerformer.configure(
   BaseOptions(baseUrl: AppEnvironments.baseUrl),
-  debugginActivated: true,
+  debugginActivated: false,
   interceptor: QueuedInterceptorsWrapper(
     onRequest: (options, handler) async {
       return handler.next(options);

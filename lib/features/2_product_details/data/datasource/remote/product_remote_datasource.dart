@@ -20,6 +20,7 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
     final randomId = Random().nextInt(100) + 1;
 
     return await _apiClient.performDecodingRequest(
+      debugIt: false,
       method: RestfulMethods.get,
       path: 'products/$randomId',
       decodableModel: ProductModel(),
