@@ -1,38 +1,24 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:jch_requester/generic_requester.dart';
 
 import 'app/app_widget.dart';
 import 'app/environment/app_environments.dart';
-import 'core/di/injection_container.dart' as di;
+import 'core/managers/connectivity_manager.dart';
+
+part 'main_binding.dart';
+part 'main_config.dart';
+part 'main_styling.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize dependencies
-  await di.init();
+  await _Binding.all();
 
-  // Styling
-  //
-  // Binding (Dependencies injection)
+  _Styling.all();
 
-  await configureRequester();
+  await _configureRequester();
 
-  runApp(const MyApp());
+  runApp(const AppWidget());
 }
-
-Future<void> configureRequester() async => RequestPerformer.configure(
-  BaseOptions(baseUrl: AppEnvironments.baseUrl),
-  debugginActivated: true,
-  interceptor: QueuedInterceptorsWrapper(
-    onRequest: (options, handler) async {
-      return handler.next(options);
-    },
-    onResponse: (response, handler) {
-      return handler.next(response);
-    },
-    onError: (error, handler) {
-      Debugger.red(error.response?.data?["body"]?["message"]);
-      return handler.next(error);
-    },
-  ),
-);
