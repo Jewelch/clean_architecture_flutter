@@ -13,6 +13,7 @@ class TodoList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      padding: EdgeInsets.only(bottom: 140),
       itemCount: todos.length,
       itemBuilder: (context, index) {
         final todo = todos[index];

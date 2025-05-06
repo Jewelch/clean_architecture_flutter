@@ -4,12 +4,12 @@ import '../../../../core/error/failures.dart';
 import '../entities/todo_entity.dart';
 import '../repositories/todo_repository.dart';
 
-class GetTodosUC {
+class DeleteTodoUC {
   final TodoRepository repository;
 
-  GetTodosUC(this.repository);
+  DeleteTodoUC(this.repository);
 
-  Future<Either<Failure, List<TodoEntity>>> execute() async {
-    return await repository.getTodos();
+  Future<Either<Failure, TodoEntity?>> execute(int id) async {
+    return await repository.deleteTodo(id);
   }
 }

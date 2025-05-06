@@ -4,6 +4,7 @@ abstract class TodoLocalDataSource {
   Future<List<TodoModel>> getTodos();
   Future<void> saveTodos(List<TodoModel> todos);
   Future<void> clearTodos();
+  Future<void> removeTodo(int id);
 }
 
 class TodoLocalDataSourceImpl implements TodoLocalDataSource {
@@ -26,5 +27,11 @@ class TodoLocalDataSourceImpl implements TodoLocalDataSource {
   Future<void> clearTodos() async {
     // In a real app, this would clear the storage
     _todos = [];
+  }
+
+  @override
+  Future<void> removeTodo(int id) async {
+    // In a real app, this would remove the todo from local storage
+    _todos.removeWhere((todo) => todo.id == id);
   }
 }
