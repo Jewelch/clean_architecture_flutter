@@ -74,3 +74,4 @@ ios/Flutter/flutter_export_environment.sh
 
 # Fichiers de couverture de code
 coverage/
+pubspec.lock

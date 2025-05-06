@@ -7,18 +7,32 @@ import '../domain/usecases/get_todos_uc.dart';
 import '../presentation/bloc/todo_bloc.dart';
 
 void injectTodosBindings() {
-  // Bloc
-  sl.registerFactory(() => TodoBloc(getTodosUC: sl()));
+  try {
+    // For singletons, use registerLazySingleton or check if already registered
+    if (!sl.isRegistered<GetTodosUC>()) {
+      sl.registerLazySingleton(() => GetTodosUC(sl()));
+    }
 
-  // Use cases
-  sl.registerLazySingleton(() => GetTodosUC(sl()));
+    if (!sl.isRegistered<TodoRepository>()) {
+      sl.registerLazySingleton<TodoRepository>(
+        () => TodoRepositoryImpl(remoteDataSource: sl(), localDataSource: sl(), connectivity: sl()),
+      );
+    }
 
-  // Repositories
-  sl.registerLazySingleton<TodoRepository>(
-    () => TodoRepositoryImpl(remoteDataSource: sl(), localDataSource: sl(), connectivity: sl()),
-  );
+    if (!sl.isRegistered<TodoRemoteDataSource>()) {
+      sl.registerLazySingleton<TodoRemoteDataSource>(() => TodoRemoteDataSourceImpl(requestPerformer: sl()));
+    }
 
-  // Data sources
-  sl.registerLazySingleton<TodoRemoteDataSource>(() => TodoRemoteDataSourceImpl(requestPerformer: sl()));
-  sl.registerLazySingleton<TodoLocalDataSource>(() => TodoLocalDataSourceImpl());
+    if (!sl.isRegistered<TodoLocalDataSource>()) {
+      sl.registerLazySingleton<TodoLocalDataSource>(() => TodoLocalDataSourceImpl());
+    }
+
+    // For BLoC, unregister if exists and register again (factory always creates new instance)
+    if (sl.isRegistered<TodoBloc>()) {
+      sl.unregister<TodoBloc>();
+    }
+    sl.registerFactory(() => TodoBloc(getTodosUC: sl()));
+  } catch (e) {
+    print('Error in todo bindings: $e');
+  }
 }
