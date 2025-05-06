@@ -5,7 +5,7 @@ import 'package:jch_requester/generic_requester.dart';
 import '../../models/product_model.dart';
 
 abstract class ProductRemoteDataSource {
-  Future<ProductModel?> getProduct();
+  Future<ProductModel?> getProduct([int? productId]);
 }
 
 class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
@@ -15,14 +15,14 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   ProductRemoteDataSourceImpl({required RequestPerformer requestPerformer}) : _apiClient = requestPerformer;
 
   @override
-  Future<ProductModel?> getProduct() async {
-    // Generate a random product ID between 1 and 100
-    final randomId = Random().nextInt(100) + 1;
+  Future<ProductModel?> getProduct([int? productId]) async {
+    // Use provided product ID or generate a random one between 1 and 100
+    final id = productId ?? Random().nextInt(100) + 1;
 
     return await _apiClient.performDecodingRequest(
       debugIt: false,
       method: RestfulMethods.get,
-      path: 'products/$randomId',
+      path: 'products/$id',
       decodableModel: ProductModel(),
     );
   }

@@ -1,5 +1,5 @@
 import '../entities/product_entity.dart';
 
 abstract class ProductRepository {
-  Future<ProductEntity?> getProduct();
+  Future<ProductEntity?> getProduct([int? productId]);
 }

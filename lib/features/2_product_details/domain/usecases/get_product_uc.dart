@@ -6,7 +6,7 @@ class GetProductUC {
 
   GetProductUC(this.repository);
 
-  Future<ProductEntity?> execute() async {
-    return await repository.getProduct();
+  Future<ProductEntity?> execute([int? productId]) async {
+    return await repository.getProduct(productId);
   }
 }

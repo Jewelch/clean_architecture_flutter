@@ -7,7 +7,9 @@ import '../bloc/product_state.dart';
 import '../widgets/product_detail_view.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  const ProductDetailsScreen({super.key});
+  final int productId;
+
+  const ProductDetailsScreen({super.key, required this.productId});
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
@@ -17,7 +19,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<ProductBloc>().add(const LoadProductEvent());
+    context.read<ProductBloc>().add(LoadProductEvent(widget.productId));
   }
 
   @override
@@ -30,7 +32,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () {
-              context.read<ProductBloc>().add(const RefreshProductEvent());
+              context.read<ProductBloc>().add(RefreshProductEvent(widget.productId));
             },
           ),
         ],

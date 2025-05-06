@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../app/app_widget.dart';
 import '../../../../common/widgets/index.dart';
@@ -33,7 +36,17 @@ class _TodoScreenState extends State<TodoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Todo List - Bloc'), backgroundColor: Colors.green),
+      appBar: AppBar(
+        title: const Text('Todo List - Bloc'),
+        backgroundColor: Colors.green,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.shopping_bag),
+            onPressed: _navigateToRandomProduct,
+            tooltip: 'View Random Product',
+          ),
+        ],
+      ),
       body: BlocBuilder<TodoBloc, TodoState>(
         builder: (context, state) {
           debugPrint('state: $state');
@@ -66,6 +79,12 @@ class _TodoScreenState extends State<TodoScreen> {
         ],
       ),
     );
+  }
+
+  void _navigateToRandomProduct() {
+    // Generate a random product ID between 1 and 100
+    final randomId = Random().nextInt(100) + 1;
+    context.push('/product/$randomId');
   }
 
   Future<void> _showAddTodoDialog() async {

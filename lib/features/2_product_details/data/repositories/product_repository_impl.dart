@@ -12,11 +12,11 @@ class ProductRepositoryImpl implements ProductRepository {
   ProductRepositoryImpl({required this.remoteDataSource, required this.localDataSource, required this.connectivity});
 
   @override
-  Future<ProductEntity?> getProduct() async {
+  Future<ProductEntity?> getProduct([int? productId]) async {
     try {
       if (connectivity.isConnected) {
         // Try to get from remote first
-        final product = await remoteDataSource.getProduct();
+        final product = await remoteDataSource.getProduct(productId);
 
         if (product != null) {
           // Save to local cache
@@ -27,7 +27,7 @@ class ProductRepositoryImpl implements ProductRepository {
         return null;
       } else {
         // Try to get from local
-        final localProduct = await localDataSource.getProduct();
+        final localProduct = await localDataSource.getProduct(productId);
         // Return as entity if available
         return localProduct != null ? ProductEntity.fromModel(localProduct) : null;
       }

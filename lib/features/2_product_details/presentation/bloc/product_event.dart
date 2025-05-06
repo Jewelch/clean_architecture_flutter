@@ -8,9 +8,19 @@ sealed class ProductEvent extends Equatable {
 }
 
 final class LoadProductEvent extends ProductEvent {
-  const LoadProductEvent();
+  final int productId;
+
+  const LoadProductEvent(this.productId);
+
+  @override
+  List<Object?> get props => [productId];
 }
 
 final class RefreshProductEvent extends ProductEvent {
-  const RefreshProductEvent();
+  final int productId;
+
+  const RefreshProductEvent(this.productId);
+
+  @override
+  List<Object?> get props => [productId];
 }

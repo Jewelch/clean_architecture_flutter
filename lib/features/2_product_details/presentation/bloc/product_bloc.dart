@@ -16,7 +16,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     emit(const ProductLoadingState());
 
     try {
-      final result = await getProductUC.execute();
+      final result = await getProductUC.execute(event.productId);
 
       if (result != null) {
         emit(ProductLoadedState(product: result));
@@ -32,7 +32,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     emit(const ProductLoadingState());
 
     try {
-      final result = await getProductUC.execute();
+      final result = await getProductUC.execute(event.productId);
 
       if (result != null) {
         emit(ProductLoadedState(product: result));
