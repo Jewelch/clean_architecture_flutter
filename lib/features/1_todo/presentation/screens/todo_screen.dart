@@ -39,14 +39,7 @@ class _TodoScreenState extends State<TodoScreen> {
       appBar: AppBar(
         title: const Text('Todo List - Bloc'),
         backgroundColor: Colors.green,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.shopping_bag),
-            onPressed: _navigateToRandomProduct,
-            tooltip: 'View Random Product',
-          ),
-          IconButton(icon: const Icon(Icons.add), onPressed: _showAddTodoDialog, tooltip: 'Add Todo'),
-        ],
+        actions: [IconButton(icon: const Icon(Icons.add), onPressed: _showAddTodoDialog, tooltip: 'Add Todo')],
       ),
       body: Column(
         children: [
@@ -80,6 +73,11 @@ class _TodoScreenState extends State<TodoScreen> {
             ),
           ),
         ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _navigateToRandomProduct,
+        label: const Text('View Random Product'),
       ),
     );
   }
